@@ -4,13 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GoogleImageShell
 {
     public static class GoogleImages
     {
-        public static async Task<string> Search(string imagePath)
+        public static async Task<string> Search(string imagePath, bool includeFileName, CancellationToken cancelToken)
         {
             var handler = new HttpClientHandler();
             handler.AllowAutoRedirect = false;
@@ -18,8 +19,11 @@ namespace GoogleImageShell
             {
                 var form = new MultipartFormDataContentCompat();
                 form.Add(new StringContent(FileToBase64Compat(imagePath)), "image_content");
-                form.Add(new StringContent(Path.GetFileName(imagePath)), "filename");
-                var response = await client.PostAsync("https://images.google.com/searchbyimage/upload", form);
+                if (includeFileName)
+                {
+                    form.Add(new StringContent(Path.GetFileName(imagePath)), "filename");
+                }
+                var response = await client.PostAsync("https://images.google.com/searchbyimage/upload", form, cancelToken);
                 if (response.StatusCode != HttpStatusCode.Redirect)
                 {
                     throw new IOException("Expected redirect to results page, got " + (int)response.StatusCode);

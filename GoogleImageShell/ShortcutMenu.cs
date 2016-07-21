@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace GoogleImageShell
@@ -8,17 +9,24 @@ namespace GoogleImageShell
     {
         private const string ShellKeyPathFormat = @"Software\Classes\SystemFileAssociations\{0}\shell";
         private const string VerbName = "GoogleImageShell";
-        private const string VerbTitle = "Search on Google Images";
         private const string CommandKey = "command";
-        private static readonly string[] FileTypes = {
-            ".jpg", ".jpe", ".jpeg", ".jfif",
-            ".gif", ".png", ".bmp",
+        private static readonly Dictionary<ImageFileType, string[]> FileTypeMap = new Dictionary<ImageFileType, string[]>
+        {
+            {ImageFileType.JPG, new[] {".jpg", ".jpe", ".jpeg", ".jfif"}},
+            {ImageFileType.GIF, new[] {".gif"}},
+            {ImageFileType.PNG, new[] {".png"}},
+            {ImageFileType.BMP, new[] {".bmp"}}
         };
 
-        private static string GetProgramCommandTemplate()
+        private static string CreateProgramCommand(bool includeFileName)
         {
             string exePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
-            return string.Format("\"{0}\" search \"%1\"", exePath);
+            string command = $"\"{exePath}\" search \"%1\"";
+            if (includeFileName)
+            {
+                command += " -n";
+            }
+            return command;
         }
 
         private static RegistryKey GetShellKey(bool allUsers, string fileType)
@@ -29,30 +37,33 @@ namespace GoogleImageShell
             return shellKey;
         }
 
-        public static void InstallHandler(bool allUsers)
+        public static void InstallHandler(string menuText, bool includeFileName, bool allUsers, ImageFileType[] types)
         {
-            string cmdTemplate = GetProgramCommandTemplate();
-            foreach (string fileType in FileTypes)
+            string command = CreateProgramCommand(includeFileName);
+            foreach (ImageFileType fileType in types)
             {
-                using (RegistryKey shellKey = GetShellKey(allUsers, fileType))
-                using (RegistryKey verbKey = shellKey.CreateSubKey(VerbName))
-                using (RegistryKey cmdKey = verbKey.CreateSubKey(CommandKey))
+                foreach (string typeExt in FileTypeMap[fileType])
                 {
-                    verbKey.SetValue("", VerbTitle);
-                    cmdKey.SetValue("", cmdTemplate);
+                    using (RegistryKey shellKey = GetShellKey(allUsers, typeExt))
+                    using (RegistryKey verbKey = shellKey.CreateSubKey(VerbName))
+                    using (RegistryKey cmdKey = verbKey.CreateSubKey(CommandKey))
+                    {
+                        verbKey.SetValue("", menuText);
+                        cmdKey.SetValue("", command);
+                    }
                 }
             }
         }
 
-        public static void UninstallHandler(bool allUsers)
+        public static void UninstallHandler(bool allUsers, ImageFileType[] types)
         {
-            foreach (string fileType in FileTypes)
+            foreach (ImageFileType fileType in types)
             {
-                using (RegistryKey shellKey = GetShellKey(allUsers, fileType))
+                foreach (string typeExt in FileTypeMap[fileType])
                 {
-                    if (shellKey != null)
+                    using (RegistryKey shellKey = GetShellKey(allUsers, typeExt))
                     {
-                        shellKey.DeleteSubKeyTree(VerbName, false);
+                        shellKey?.DeleteSubKeyTree(VerbName, false);
                     }
                 }
             }
