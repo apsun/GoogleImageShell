@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace GoogleImageShell
@@ -13,6 +14,8 @@ namespace GoogleImageShell
 
         private void ConfigForm_Load(object sender, EventArgs e)
         {
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+            Text += $" v{version.Major}.{version.Minor}.{version.Build}";
             foreach (object type in Enum.GetValues(typeof(ImageFileType)))
             {
                 fileTypeListBox.Items.Add(type, true);
