@@ -11,18 +11,17 @@ Search Google Images from the comfort of Windows Explorer!
 
 ## Installation
 
-Simply run the program and pass `install` as the parameter. To install it
-for all users, use the `-a` flag (remember to run as administrator):
+Install the program by running the executable and clicking 'Install'.
+To install for all users, run the program as an administrator and check
+the "Install/uninstall for all users" box.
 
-`GoogleImageShell.exe install [-a]`
+To uninstall, follow the same steps but click 'Uninstall'. If you
+installed the program for all users, you must also uninstall it for
+all users.
 
-To uninstall the program, follow the installation instructions and replace
-`install` with `uninstall`:
-
-`GoogleImageShell.exe uninstall [-a]`
-
-Note: If you move/rename the program, you must re-install it, otherwise the
-shortcut entry will stop functioning!
+**Note**: Do not delete, move, or rename the executable file before
+uninstalling the program; otherwise the shortcut entry will stop
+functioning!
 
 ## Supported image formats
 
