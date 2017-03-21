@@ -18,13 +18,17 @@ namespace GoogleImageShell
             {ImageFileType.BMP, new[] {".bmp"}}
         };
 
-        private static string CreateProgramCommand(bool includeFileName)
+        private static string CreateProgramCommand(bool includeFileName, bool resizeOnUpload)
         {
             string exePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
             string command = $"\"{exePath}\" search \"%1\"";
             if (includeFileName)
             {
                 command += " -n";
+            }
+            if (resizeOnUpload)
+            {
+                command += " -r";
             }
             return command;
         }
@@ -37,9 +41,9 @@ namespace GoogleImageShell
             return shellKey;
         }
 
-        public static void InstallHandler(string menuText, bool includeFileName, bool allUsers, ImageFileType[] types)
+        public static void InstallHandler(string menuText, bool includeFileName, bool allUsers, bool resizeOnUpload, ImageFileType[] types)
         {
-            string command = CreateProgramCommand(includeFileName);
+            string command = CreateProgramCommand(includeFileName, resizeOnUpload);
             foreach (ImageFileType fileType in types)
             {
                 foreach (string typeExt in FileTypeMap[fileType])

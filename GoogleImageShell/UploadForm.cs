@@ -10,6 +10,8 @@ namespace GoogleImageShell
     {
         private readonly string _imagePath;
         private readonly bool _includeFileName;
+        private readonly bool _resizeOnUpload;
+
         private readonly CancellationTokenSource _cancelTokenSource = new CancellationTokenSource();
 
         public UploadForm(string[] args)
@@ -19,6 +21,7 @@ namespace GoogleImageShell
             {
                 string arg = args[i];
                 if (arg == "-n") _includeFileName = true;
+                else if (arg == "-r") _resizeOnUpload = true;
                 else _imagePath = arg;
             }
         }
@@ -27,7 +30,9 @@ namespace GoogleImageShell
         {
             Log("Uploading image: " + _imagePath);
             Log("Include file name: " + _includeFileName);
-            Task<string> task = GoogleImages.Search(_imagePath, _includeFileName, _cancelTokenSource.Token);
+            Log("Resize on upload: " + _resizeOnUpload);
+
+            Task<string> task = GoogleImages.Search(_imagePath, _includeFileName, _resizeOnUpload, _cancelTokenSource.Token);
             task.ContinueWith(OnUploadComplete, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
