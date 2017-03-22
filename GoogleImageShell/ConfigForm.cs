@@ -27,8 +27,9 @@ namespace GoogleImageShell
             string menuText = menuTextTextBox.Text;
             bool includeFileName = includeFileNameCheckBox.Checked;
             bool allUsers = allUsersCheckBox.Checked;
+            bool resizeOnUpload = resizeOnUploadCheckbox.Checked;
             ImageFileType[] types = fileTypeListBox.CheckedItems.Cast<ImageFileType>().ToArray();
-            Install(menuText, includeFileName, allUsers, types);
+            Install(menuText, includeFileName, allUsers, resizeOnUpload, types);
         }
 
         private void uninstallButton_Click(object sender, EventArgs e)
@@ -38,11 +39,11 @@ namespace GoogleImageShell
             Uninstall(allUsers, types);
         }
 
-        private static void Install(string menuText, bool includeFileName, bool allUsers, ImageFileType[] types)
+        private static void Install(string menuText, bool includeFileName, bool allUsers, bool resizeOnUpload, ImageFileType[] types)
         {
             try
             {
-                ShortcutMenu.InstallHandler(menuText, includeFileName, allUsers, types);
+                ShortcutMenu.InstallHandler(menuText, includeFileName, allUsers, resizeOnUpload, types);
             }
             catch (Exception ex)
             {

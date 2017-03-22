@@ -36,11 +36,12 @@
             this.allUsersCheckBox = new System.Windows.Forms.CheckBox();
             this.fileTypeListBox = new System.Windows.Forms.CheckedListBox();
             this.fileTypeLabel = new System.Windows.Forms.Label();
+            this.resizeOnUploadCheckbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // installButton
             // 
-            this.installButton.Location = new System.Drawing.Point(12, 171);
+            this.installButton.Location = new System.Drawing.Point(12, 195);
             this.installButton.Name = "installButton";
             this.installButton.Size = new System.Drawing.Size(175, 30);
             this.installButton.TabIndex = 0;
@@ -50,7 +51,7 @@
             // 
             // uninstallButton
             // 
-            this.uninstallButton.Location = new System.Drawing.Point(197, 171);
+            this.uninstallButton.Location = new System.Drawing.Point(197, 195);
             this.uninstallButton.Name = "uninstallButton";
             this.uninstallButton.Size = new System.Drawing.Size(175, 30);
             this.uninstallButton.TabIndex = 1;
@@ -90,7 +91,7 @@
             // allUsersCheckBox
             // 
             this.allUsersCheckBox.AutoSize = true;
-            this.allUsersCheckBox.Location = new System.Drawing.Point(15, 61);
+            this.allUsersCheckBox.Location = new System.Drawing.Point(15, 85);
             this.allUsersCheckBox.Name = "allUsersCheckBox";
             this.allUsersCheckBox.Size = new System.Drawing.Size(307, 17);
             this.allUsersCheckBox.TabIndex = 3;
@@ -101,7 +102,7 @@
             // 
             this.fileTypeListBox.CheckOnClick = true;
             this.fileTypeListBox.FormattingEnabled = true;
-            this.fileTypeListBox.Location = new System.Drawing.Point(12, 101);
+            this.fileTypeListBox.Location = new System.Drawing.Point(12, 125);
             this.fileTypeListBox.Name = "fileTypeListBox";
             this.fileTypeListBox.Size = new System.Drawing.Size(360, 64);
             this.fileTypeListBox.TabIndex = 4;
@@ -109,18 +110,31 @@
             // fileTypeLabel
             // 
             this.fileTypeLabel.AutoSize = true;
-            this.fileTypeLabel.Location = new System.Drawing.Point(12, 85);
+            this.fileTypeLabel.Location = new System.Drawing.Point(12, 109);
             this.fileTypeLabel.Name = "fileTypeLabel";
             this.fileTypeLabel.Size = new System.Drawing.Size(168, 13);
             this.fileTypeLabel.TabIndex = 5;
             this.fileTypeLabel.Text = "Install/uninstall for these file types:";
+            // 
+            // resizeOnUploadCheckbox
+            // 
+            this.resizeOnUploadCheckbox.AutoSize = true;
+            this.resizeOnUploadCheckbox.Checked = true;
+            this.resizeOnUploadCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.resizeOnUploadCheckbox.Location = new System.Drawing.Point(15, 62);
+            this.resizeOnUploadCheckbox.Name = "resizeOnUploadCheckbox";
+            this.resizeOnUploadCheckbox.Size = new System.Drawing.Size(202, 17);
+            this.resizeOnUploadCheckbox.TabIndex = 6;
+            this.resizeOnUploadCheckbox.Text = "Resize before uploading large images";
+            this.resizeOnUploadCheckbox.UseVisualStyleBackColor = true;
             // 
             // ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(384, 211);
+            this.ClientSize = new System.Drawing.Size(384, 234);
+            this.Controls.Add(this.resizeOnUploadCheckbox);
             this.Controls.Add(this.fileTypeLabel);
             this.Controls.Add(this.fileTypeListBox);
             this.Controls.Add(this.allUsersCheckBox);
@@ -150,5 +164,6 @@
         private System.Windows.Forms.CheckBox allUsersCheckBox;
         private System.Windows.Forms.CheckedListBox fileTypeListBox;
         private System.Windows.Forms.Label fileTypeLabel;
+        private System.Windows.Forms.CheckBox resizeOnUploadCheckbox;
     }
 }
