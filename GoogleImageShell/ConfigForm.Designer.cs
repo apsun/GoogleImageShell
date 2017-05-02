@@ -125,7 +125,7 @@
             this.resizeOnUploadCheckbox.Name = "resizeOnUploadCheckbox";
             this.resizeOnUploadCheckbox.Size = new System.Drawing.Size(202, 17);
             this.resizeOnUploadCheckbox.TabIndex = 6;
-            this.resizeOnUploadCheckbox.Text = "Resize before uploading large images";
+            this.resizeOnUploadCheckbox.Text = "Resize large images before uploading";
             this.resizeOnUploadCheckbox.UseVisualStyleBackColor = true;
             // 
             // ConfigForm

@@ -20,9 +20,18 @@ namespace GoogleImageShell
             for (int i = 1; i < args.Length; ++i)
             {
                 string arg = args[i];
-                if (arg == "-n") _includeFileName = true;
-                else if (arg == "-r") _resizeOnUpload = true;
-                else _imagePath = arg;
+                switch (arg)
+                {
+                    case "-n":
+                        _includeFileName = true;
+                        break;
+                    case "-r":
+                        _resizeOnUpload = true;
+                        break;
+                    default:
+                        _imagePath = arg;
+                        break;
+                }
             }
         }
 
